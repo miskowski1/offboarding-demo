@@ -1,0 +1,25 @@
+form {
+  --gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+
+  > * {
+    flex-basis: 100%;
+
+    &.half {
+      flex-basis: calc(50% - var(--gap) / 2);
+    }
+  }
+}
+
+.footer {
+  --margin: 16px;
+  width: calc(100% - var(--margin) * 2);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: var(--margin);
+}

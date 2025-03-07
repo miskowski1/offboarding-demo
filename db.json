@@ -1,0 +1,175 @@
+{
+  "employees": [
+    {
+      "id": "emp1001",
+      "name": "John Doe",
+      "department": "Engineering",
+      "status": "ACTIVE",
+      "email": "john.doe@example.com",
+      "equipments": [
+        {
+          "id": "eqp2001",
+          "name": "MacBook Pro"
+        },
+        {
+          "id": "eqp2002",
+          "name": "Magic Mouse"
+        }
+      ]
+    },
+    {
+      "id": "emp1002",
+      "name": "Jane Smith",
+      "department": "Marketing",
+      "status": "OFFBOARDED",
+      "email": "jane.smith@example.com",
+      "equipments": [
+        {
+          "id": "eqp2003",
+          "name": "Dell XPS 13"
+        },
+        {
+          "id": "eqp2004",
+          "name": "Logitech MX Master"
+        }
+      ]
+    },
+    {
+      "id": "emp1003",
+      "name": "Robert Johnson",
+      "department": "Finance",
+      "status": "ACTIVE",
+      "email": "robert.j@example.com",
+      "equipments": [
+        {
+          "id": "eqp2005",
+          "name": "HP EliteBook"
+        },
+        {
+          "id": "eqp2006",
+          "name": "Microsoft Surface Mouse"
+        }
+      ]
+    },
+    {
+      "id": "emp1004",
+      "name": "Emily Davis",
+      "department": "HR",
+      "status": "OFFBOARDED",
+      "email": "emily.davis@example.com",
+      "equipments": [
+        {
+          "id": "eqp2007",
+          "name": "Lenovo ThinkPad"
+        },
+        {
+          "id": "eqp2008",
+          "name": "Apple Magic Keyboard"
+        }
+      ]
+    },
+    {
+      "id": "emp1005",
+      "name": "Michael Brown",
+      "department": "IT Support",
+      "status": "ACTIVE",
+      "email": "michael.brown@example.com",
+      "equipments": [
+        {
+          "id": "eqp2009",
+          "name": "MacBook Air"
+        },
+        {
+          "id": "eqp2010",
+          "name": "Dell Monitor"
+        }
+      ]
+    },
+    {
+      "id": "emp1006",
+      "name": "Sarah Wilson",
+      "department": "Engineering",
+      "status": "OFFBOARDED",
+      "email": "sarah.wilson@example.com",
+      "equipments": [
+        {
+          "id": "eqp2011",
+          "name": "Microsoft Surface Laptop"
+        },
+        {
+          "id": "eqp2012",
+          "name": "Logitech Keyboard"
+        }
+      ]
+    },
+    {
+      "id": "emp1007",
+      "name": "David Martinez",
+      "department": "Sales",
+      "status": "ACTIVE",
+      "email": "david.martinez@example.com",
+      "equipments": [
+        {
+          "id": "eqp2013",
+          "name": "Acer Swift 5"
+        },
+        {
+          "id": "eqp2014",
+          "name": "Wireless Mouse"
+        }
+      ]
+    },
+    {
+      "id": "emp1008",
+      "name": "Sophia Anderson",
+      "department": "Customer Support",
+      "status": "OFFBOARDED",
+      "email": "sophia.anderson@example.com",
+      "equipments": [
+        {
+          "id": "eqp2015",
+          "name": "Asus ZenBook"
+        },
+        {
+          "id": "eqp2016",
+          "name": "Apple AirPods"
+        }
+      ]
+    },
+    {
+      "id": "emp1009",
+      "name": "James Lee",
+      "department": "Legal",
+      "status": "ACTIVE",
+      "email": "james.lee@example.com",
+      "equipments": [
+        {
+          "id": "eqp2017",
+          "name": "HP Spectre x360"
+        },
+        {
+          "id": "eqp2018",
+          "name": "Bose Headphones"
+        }
+      ]
+    },
+    {
+      "id": "emp1010",
+      "name": "Olivia White",
+      "department": "Operations",
+      "status": "OFFBOARDED",
+      "email": "olivia.white@example.com",
+      "equipments": [
+        {
+          "id": "eqp2019",
+          "name": "Lenovo Yoga"
+        },
+        {
+          "id": "eqp2020",
+          "name": "Samsung Monitor"
+        }
+      ]
+    }
+  ],
+  "users": []
+}

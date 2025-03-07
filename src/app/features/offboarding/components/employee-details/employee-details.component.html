@@ -1,0 +1,52 @@
+<mat-sidenav-container class="employee-details">
+  <mat-sidenav position="end" [(opened)]="opened" disableClose>
+    <app-employee-offboard [employeeId]="employeeId()" [(opened)]="opened"></app-employee-offboard>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    @let vmEmployee = employee.value();
+
+    <div class="row">
+      <button mat-button (click)="navigateBack()">
+        <mat-icon>arrow_back_ios</mat-icon>
+        Back
+      </button>
+    </div>
+
+    <div class="row">
+      <h2>{{ vmEmployee?.name }}</h2>
+      <button mat-flat-button
+              [disabled]="vmEmployee?.status !== 'ACTIVE'" disabledInteractive
+              matTooltip="You cannot offboard an inactive employee"
+              [matTooltipDisabled]="vmEmployee?.status === 'ACTIVE'"
+              (click)="openSidebar()">Offboard</button>
+    </div>
+
+    <div class="sections">
+      <div class="section">
+        <span class="section__header">
+          Employee Details
+        </span>
+        <div class="details-grid">
+          <span class="label">Full Name</span>
+          <span>{{ vmEmployee?.name }}</span>
+          <span class="label">Email</span>
+          <span>{{ vmEmployee?.email }}</span>
+          <span class="label">Department</span>
+          <span>{{ vmEmployee?.department }}</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <span class="section__header">
+          Equipment
+        </span>
+        <mat-list>
+          @for (equipment of vmEmployee?.equipments; track equipment.id) {
+            <mat-list-item>{{ equipment.name }}</mat-list-item>
+          }
+        </mat-list>
+      </div>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

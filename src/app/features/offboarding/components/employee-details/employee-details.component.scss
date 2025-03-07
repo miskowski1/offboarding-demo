@@ -1,0 +1,38 @@
+.employee-details {
+  height: 100%;
+
+  mat-sidenav {
+    width: 50%;
+    padding: 20px;
+  }
+
+  mat-sidenav-content {
+    padding: 2vh 3vw;
+  }
+}
+
+.sections {
+  .section {
+    &__header {
+      display: block;
+      font-weight: bold;
+      width: 100%;
+      border-bottom: 2px solid var(--mat-sys-primary);
+      margin-bottom: 16px;
+    }
+
+    &:not(:first-child) {
+      margin-top: 32px;
+    }
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr;
+    gap: 16px;
+
+    > .label {
+      opacity: 0.7;
+    }
+  }
+}

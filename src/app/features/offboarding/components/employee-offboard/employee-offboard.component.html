@@ -1,0 +1,81 @@
+<h2>Offboard</h2>
+<form [formGroup]="offBoardForm">
+  <mat-form-field>
+    <mat-label>Receiver</mat-label>
+    <input matInput [formControl]="addressGroup.controls.receiver">
+    @if (addressGroup.controls.receiver.errors?.['required']) {
+      <mat-error>Receiver is required</mat-error>
+    } @else if (addressGroup.controls.receiver.errors?.['minlength']) {
+      <mat-error>Receiver must be at least 3 characters long</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+    @if (offBoardForm.controls.email.errors?.['required']) {
+      <mat-error>Email is required</mat-error>
+    } @else if (offBoardForm.controls.email.errors?.['email']) {
+      <mat-error>Invalid email format</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Phone</mat-label>
+    <input matInput formControlName="phone">
+    @if (offBoardForm.controls.phone.errors?.['required']) {
+      <mat-error>Phone is required</mat-error>
+    } @else if (offBoardForm.controls.phone.errors?.['pattern']) {
+      <mat-error>Invalid phone format</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Street line</mat-label>
+    <input matInput [formControl]="addressGroup.controls.streetLine1">
+    @if (addressGroup.controls.streetLine1.errors?.['required']) {
+      <mat-error>Street line is required</mat-error>
+    } @else if (addressGroup.controls.streetLine1.errors?.['minlength']) {
+      <mat-error>Street line must be at lest 3 characters long</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="half">
+    <mat-label>City</mat-label>
+    <input matInput formControlName="city">
+    @if (offBoardForm.controls.city.errors?.['required']) {
+      <mat-error>City is required</mat-error>
+    } @else if (offBoardForm.controls.city.errors?.['minlength']) {
+      <mat-error>City must be at least 3 characters long</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="half">
+    <mat-label>Postal code</mat-label>
+    <input matInput [formControl]="addressGroup.controls.postalCode">
+    @if (addressGroup.controls.postalCode.errors?.['required']) {
+      <mat-error>Postal code is required</mat-error>
+    } @else if (addressGroup.controls.postalCode.errors?.['pattern']) {
+      <mat-error>Invalid postal code format</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Country</mat-label>
+    <input matInput [formControl]="addressGroup.controls.country">
+    @if (addressGroup.controls.country.errors?.['required']) {
+      <mat-error>Country is required</mat-error>
+    } @else if (addressGroup.controls.country.errors?.['minlength']) {
+      <mat-error>Country must be at least 3 characters long</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Notes</mat-label>
+    <textarea matInput formControlName="notes"></textarea>
+  </mat-form-field>
+</form>
+<div class="footer">
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-flat-button [disabled]="offBoardForm.invalid" (click)="save()">Offboard</button>
+</div>
