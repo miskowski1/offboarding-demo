@@ -1,36 +1,27 @@
-import { computed, inject } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { Sort } from '@angular/material/sort';
-import { Router } from '@angular/router';
-import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
-import { setAllEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { debounceTime, distinctUntilChanged, map, pipe, switchMap, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { Employee } from '../../../core/models/employee.model';
 import { OffboardRequest } from '../../../core/models/offboard-request.model';
 import { BackendService } from '../services/backend.service';
 
-type EmployeesState = {
-  searchQuery: string,
-  sort: Sort
-}
+@Injectable()
+export class EmployeesStore {
+  private employees = rxResource({
+    loader: () => this.backendService.getEmployees(),
+    defaultValue: []
+  });
+  private searchQuery = signal<string>('');
+  private sort = signal<Sort>({ active: '', direction: '' });
 
-const initialState: EmployeesState = {
-  searchQuery: '',
-  sort: {
-    active: '',
-    direction: ''
-  }
-}
+  private readonly backendService = inject(BackendService);
 
-export const EmployeesStore = signalStore(
-  withEntities<Employee>(),
-  withState(initialState),
-  withComputed(({ entities: employees, searchQuery, sort }) => ({
-    vmEmployees: computed((() => employees().reduce((acc: Employee[], employee) => {
-      if (employee.name?.toLowerCase().includes(searchQuery()) || employee.department?.toLowerCase().includes(searchQuery())) {
-        let index = acc.findIndex(_employee => sort().direction === 'asc'
-          ? _employee[ sort().active as keyof Employee ] > employee[ sort().active as keyof Employee ]
-          : _employee[ sort().active as keyof Employee ] < employee[ sort().active as keyof Employee ]
+  vmEmployees = computed((() => this.employees.value()?.reduce((acc: Employee[], employee) => {
+      if (employee.name?.toLowerCase().includes(this.searchQuery()) || employee.department?.toLowerCase().includes(this.searchQuery())) {
+        let index = acc.findIndex(_employee => this.sort().direction === 'asc'
+          ? _employee[ this.sort().active as keyof Employee ] > employee[ this.sort().active as keyof Employee ]
+          : _employee[ this.sort().active as keyof Employee ] < employee[ this.sort().active as keyof Employee ]
         );
 
         if (index === -1) {
@@ -40,36 +31,20 @@ export const EmployeesStore = signalStore(
         }
       }
       return acc;
-    }, [])))
-  })),
-  withMethods((store, backendService = inject(BackendService), router = inject(Router)) => ({
-    doFlips: rxMethod<{ id: string, employee: Partial<Employee>, requestData: OffboardRequest }>(
-      pipe(
-        switchMap(({ id, employee, requestData}) => backendService.offboardEmployee(id, requestData).pipe(
-          map(() => patchState(store, updateEntity({ id, changes: employee }))),
-          tap(() => router.navigate([ '/offboarding' ]))
-        ))
-      )
-    ),
-    updateEmployee(id: string, employee: Partial<Employee>) {
-      patchState(store, updateEntity({ id, changes: employee }));
-    },
-    updateSearchQuery: rxMethod<string>(
-      pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        map(searchQuery => patchState(store, { searchQuery }))
-      )
-    ),
-    updateSort(sort: Sort) {
-      patchState(store, { sort })
-    }
-  })),
-  withHooks({
-    onInit(store, backendService = inject(BackendService)) {
-      backendService.getEmployees().subscribe(employees => {
-        patchState(store, setAllEntities(employees));
-      });
-    }
-  })
-)
+    }, []
+  )));
+
+  updateSearchQuery(query: string) {
+    this.searchQuery.set(query);
+  }
+
+  updateSort(sort: Sort) {
+    this.sort.set(sort);
+  }
+
+  offboardEmployee(id: string, employee: Partial<Employee>, requestData: OffboardRequest) {
+    return this.backendService.offboardEmployee(id, requestData).pipe(
+      tap(() => this.employees.set(this.employees.value().map(_employee => _employee.id === id ? { ..._employee, ...employee } : _employee)))
+    );
+  }
+}

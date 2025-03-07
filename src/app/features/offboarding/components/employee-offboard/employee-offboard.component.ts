@@ -1,7 +1,8 @@
 import { Component, inject, input, model, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
+import { filter, map, Subject, switchMap, takeUntil } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { EmployeesStore } from '../../store/employees.store';
 
@@ -18,6 +19,7 @@ export class EmployeeOffboardComponent implements OnDestroy {
 
   private readonly dialog = inject(MatDialog);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   private readonly store = inject(EmployeesStore);
 
   offBoardForm = this.formBuilder.group({
@@ -62,16 +64,16 @@ export class EmployeeOffboardComponent implements OnDestroy {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
 
     dialogRef.afterClosed().pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe(result => {
-      if (result) {
+      takeUntil(this.unsubscribe$),
+      filter(result => !!result),
+      map(() => {
         const { city, ...responseData } = this.offBoardForm.getRawValue();
-        this.store.doFlips({
-          id: this.employeeId(),
-          employee: { status: 'OFFBOARDED' },
-          requestData: responseData
-        })
-      }
+
+        return responseData
+      }),
+      switchMap(requestData => this.store.offboardEmployee(this.employeeId(), { status: 'OFFBOARDED' }, requestData))
+    ).subscribe(() => {
+      this.router.navigate([ '/offboarding' ]);
     });
   }
 }
