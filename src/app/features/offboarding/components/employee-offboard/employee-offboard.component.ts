@@ -65,11 +65,11 @@ export class EmployeeOffboardComponent implements OnDestroy {
       takeUntil(this.unsubscribe$)
     ).subscribe(result => {
       if (result) {
-        const { city, ...responseData } = this.offBoardForm.getRawValue();
-        this.store.doFlips({
+        const { city, ...requestData } = this.offBoardForm.getRawValue();
+        this.store.offboardEmployee({
           id: this.employeeId(),
           employee: { status: 'OFFBOARDED' },
-          requestData: responseData
+          requestData
         })
       }
     });

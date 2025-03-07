@@ -43,7 +43,7 @@ export const EmployeesStore = signalStore(
     }, [])))
   })),
   withMethods((store, backendService = inject(BackendService), router = inject(Router)) => ({
-    doFlips: rxMethod<{ id: string, employee: Partial<Employee>, requestData: OffboardRequest }>(
+    offboardEmployee: rxMethod<{ id: string, employee: Partial<Employee>, requestData: OffboardRequest }>(
       pipe(
         switchMap(({ id, employee, requestData}) => backendService.offboardEmployee(id, requestData).pipe(
           map(() => patchState(store, updateEntity({ id, changes: employee }))),
@@ -51,9 +51,6 @@ export const EmployeesStore = signalStore(
         ))
       )
     ),
-    updateEmployee(id: string, employee: Partial<Employee>) {
-      patchState(store, updateEntity({ id, changes: employee }));
-    },
     updateSearchQuery: rxMethod<string>(
       pipe(
         debounceTime(300),
