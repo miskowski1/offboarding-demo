@@ -2,3 +2,11 @@
   padding: 2vw 3vh;
   display: block;
 }
+
+.mat-mdc-row .mat-mdc-cell {
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background: var(--mat-sys-surface-dim);
+}

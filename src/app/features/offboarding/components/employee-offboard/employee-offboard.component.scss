@@ -22,4 +22,16 @@ form {
   display: flex;
   justify-content: space-between;
   padding: var(--margin);
+  background: var(--mat-sys-surface);
+}
+
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wrapper {
+  height: calc(100% - 28.5px - 72px - 20px);
+  overflow: auto;
 }
